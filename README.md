@@ -1,2 +1,2 @@
-# uprl
+# UpRL
 URL link updater.
