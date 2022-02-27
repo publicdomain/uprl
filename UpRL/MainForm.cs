@@ -33,7 +33,10 @@ namespace UpRL
         /// <param name="e">Event arguments.</param>
         private void OnAddDirectoryButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK && this.folderBrowserDialog.SelectedPath.Length > 0)
+            {
+                this.directoriesListBox.Items.Add(this.folderBrowserDialog.SelectedPath);
+            }
         }
 
         /// <summary>
