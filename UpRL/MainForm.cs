@@ -9,6 +9,7 @@ namespace UpRL
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.IO;
     using System.Windows.Forms;
 
     /// <summary>
@@ -62,7 +63,16 @@ namespace UpRL
         /// <param name="e">Event arguments.</param>
         private void OnDirectoriesListBoxDragDrop(object sender, DragEventArgs e)
         {
-            // TODO Add code
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                foreach (var possibleDirectory in (string[])e.Data.GetData(DataFormats.FileDrop))
+                {
+                    if (Directory.Exists(possibleDirectory))
+                    {
+                        this.directoriesListBox.Items.Add(possibleDirectory);
+                    }
+                }
+            }
         }
 
         /// <summary>
