@@ -10,7 +10,9 @@ namespace UpRL
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Linq;
     using System.Windows.Forms;
+    using HtmlAgilityPack;
 
     /// <summary>
     /// Description of MainForm.
@@ -37,6 +39,9 @@ namespace UpRL
             {
                 this.directoriesListBox.Items.Add(this.folderBrowserDialog.SelectedPath);
             }
+
+            // Update directories count
+            this.directoriesCountToolStripStatusLabel.Text = this.directoriesListBox.Items.Count.ToString();
         }
 
         /// <summary>
@@ -46,7 +51,76 @@ namespace UpRL
         /// <param name="e">Event arguments.</param>
         private void OnProcessButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Disable buttons while processing
+            this.addDirectoryButton.Enabled = false;
+            this.processButton.Enabled = false;
+
+            // List of URL files
+            List<string> urlFilesList = new List<string>();
+
+            // Iterate folders
+            foreach (string directory in this.directoriesListBox.Items)
+            {
+                // Add URL paths
+                urlFilesList.AddRange(Directory.GetFiles(directory, "*.url", this.scanSubdirectoriesToolStripMenuItem.Checked ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
+            }
+
+            // Update files with new titles
+            foreach (string urlFile in urlFilesList)
+            {
+                try
+                {
+                    // Title
+                    string title = string.Empty;
+
+                    // Read all lines
+                    var lines = File.ReadAllLines(urlFile);
+
+                    // Iterate lines
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        // Look for URL line
+                        if (lines[i].StartsWith("url=", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            // Extract URL
+                            string url = lines[i].Split('=')[1];
+
+                            // Get title from URL
+                            var htmlWeb = new HtmlWeb();
+                            var document = htmlWeb.Load(url);
+                            title = document.DocumentNode.SelectSingleNode("html/head/title").InnerText;
+                        }
+                    }
+
+                    // Backup
+                    if (this.backupFilesToolStripMenuItem.Checked)
+                    {
+                        // Backup directory
+                        var backupDirectory = Path.Combine(Path.GetDirectoryName(urlFile), "UpRL-backup");
+
+                        // Create backup directory
+                        Directory.CreateDirectory(backupDirectory);
+
+                        // Copy current .url file
+                        File.Move(urlFile, Path.Combine(backupDirectory, Path.GetFileName(urlFile)));
+                    }
+
+                    // Save URL file to disk
+                    File.WriteAllLines(Path.Combine(Path.GetDirectoryName(urlFile), $"{string.Join("_", title.Split(Path.GetInvalidFileNameChars()))}.url"), lines);
+
+                    // Update processed count
+                    this.processedCountToolStripStatusLabel.Text = (int.Parse(this.processedCountToolStripStatusLabel.Text) + 1).ToString();
+                }
+                catch (Exception ex)
+                {
+                    // Append to error log
+                    File.AppendAllText("UpRL-ErrorLog.txt", $"{Environment.NewLine }File: {urlFile}, Message: {ex.Message}");
+                }
+            }
+
+            // Disable buttons after processing
+            this.addDirectoryButton.Enabled = true;
+            this.processButton.Enabled = true;
         }
 
         /// <summary>
@@ -75,6 +149,9 @@ namespace UpRL
                         this.directoriesListBox.Items.Add(possibleDirectory);
                     }
                 }
+
+                // Update directories count
+                this.directoriesCountToolStripStatusLabel.Text = this.directoriesListBox.Items.Count.ToString();
             }
         }
 
