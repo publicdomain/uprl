@@ -160,9 +160,14 @@ namespace UpRL
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
-        private void OnNewToolStripMenuItem1Click(object sender, EventArgs e)
+        private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Clear list
+            this.directoriesListBox.Items.Clear();
+
+            // Reset counters
+            this.directoriesCountToolStripStatusLabel.Text = "0";
+            this.processedCountToolStripStatusLabel.Text = "0";
         }
 
         /// <summary>
