@@ -32,9 +32,9 @@ Day #72, Week #10 @ March 13, 2022
 
 If you like these public domain releases, you can support with a one-time Donation via Paypal @ [www.paypal.com/paypalme/victorvls](https://www.paypal.com/paypalme/victorvls) or by becoming a Patron @ [www.patreon.com/publicdomain](https://www.patreon.com/publicdomain).
 
-Thank you very much for helping us bring more releases to life!
+Thank you very much for helping us bring more releases to life! 👍
 
-Keep on rocking!
+Keep rocking! 🏆
 
 ==========
 
