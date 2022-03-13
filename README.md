@@ -5,16 +5,16 @@ URL link updater.
 
 Made for **magician62** from [donationcoder.com](https://www.donationcoder.com).
 
-Original thread: [IDEA: URL link updater](https://www.donationcoder.com/forum/index.php?topic=52165.0)
+Original thread: [IDEA: URL link updater](https://www.donationcoder.com/forum/index.php?topic=52165.0).
 
-Source code: [UpRL @ GitHub](https://github.com/publicdomain/uprl)
+Source code: [UpRL @ GitHub](https://github.com/publicdomain/uprl).
 
-Targets Microsoft .NET framework v4.5 (Native to Windows 8+)
+Targets Microsoft .NET framework v4.5 (Native to Windows 8+).
 
 Notes:
 
 v0.1.0:
-- Update .url files based on current/live title.
+- Updates .url files based on current/live title.
 - Drag and Drop support.
 - Scan subdirectories.
 - Backup files.
