@@ -275,7 +275,7 @@ namespace UpRL
             var aboutForm = new AboutForm(
                 $"About {programTitle}",
                 $"{programTitle} {version.Major}.{version.Minor}.{version.Build}",
-                $"Made for: magician62{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #59, Week #09 @ February 28, 2022",
+                $"Made for: magician62{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #72, Week #10 @ March 13, 2022",
                 licenseText,
                 this.Icon.ToBitmap())
             {
